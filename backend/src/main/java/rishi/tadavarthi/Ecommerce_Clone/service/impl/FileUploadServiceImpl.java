@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import rishi.tadavarthi.Ecommerce_Clone.service.FileUploadService;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
@@ -51,6 +52,13 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public boolean deleteFile(String imgUrl) {
-        return false;
+        String filename = imgUrl.substring(imgUrl.lastIndexOf("/")+1);
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(filename)
+                .build();
+        s3Client.deleteObject(deleteObjectRequest);
+
+        return true;
     }
 }
