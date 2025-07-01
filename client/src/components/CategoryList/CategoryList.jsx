@@ -1,16 +1,29 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {AppContext} from "../../Context/AppContext.jsx";
 import './CategoryList.css'
 
 const CategoryList = () => {
     const {categories} = useContext(AppContext);
+    const [searchTerm, setSearchTerm] = useState('');
     return (
         <div className={"category-list-container"} style = {{height:'100vh', overflowY:'auto', overflowX:'hidden'}}>
-
             <div className = "row pe-2">
-                search bar
-            </div>
+                <div className = "input-group mb-3">
+                    <input type = "text"
+                           name={"keyword"}
+                           placeholder = "search by keywoard"
+                           className = "form-control"
+                           onChange={(e) => {setSearchTerm(e.target.value)}}
+                            value = {searchTerm}
 
+                    />
+                    <span className = "input-group-text bg-warning">
+                        <i className = "bi bi-search">
+
+                        </i>
+                    </span>
+                </div>
+            </div>
             <div className = "row g-3 pe-2">
                 {categories.map((category, index) => (
                     <div key = {index} className = "col-12">
