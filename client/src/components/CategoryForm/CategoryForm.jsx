@@ -27,11 +27,11 @@ const onChangeHandler = (e) => {
 
 const onSubmitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
     if (!image) {
         toast.error("Please select an image for category");
         return;
     }
+    setLoading(true);
     const formData = new FormData();
     formData.append('category', JSON.stringify(data));
     formData.append('file', image);
