@@ -6,6 +6,7 @@ import ManageItems from "./pages/ManageItems/ManageItems.jsx";
 import Explore from "./pages/Explore/Explore.jsx";
 import { Routes, Route } from "react-router-dom";
 import {Toaster} from "react-hot-toast";
+import Login from "./pages/Login/Login.jsx";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path="/items" element={<ManageItems />} />
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/" element={<Dashboard />} />
+                <Route path={"/login"} element={<Login />} />
             </Routes>
         </div>
     );
