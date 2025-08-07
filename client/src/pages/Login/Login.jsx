@@ -31,6 +31,7 @@ const Login = () => {
                 setAuthData(response.data.token, response.data.role);
                 // window.location.href = "/dashboard";
                 navigate("/dashboard");
+                window.location.reload();
             }
         } catch (error){
             console.error(error);

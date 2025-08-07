@@ -1,10 +1,16 @@
 import './Menubar.css';
 import {assets} from "../../assets/assets.js";
-import {Link} from "react-router-dom";
+import {Link, Links, useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {AppContext} from "../../Context/AppContext.jsx";
 const Menubar = () => {
-
+    const navigate = useNavigate();
+    const {setAuthData} = useContext(AppContext);
     const logout = () => {
-
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        setAuthData(null, null);
+        navigate('/login');
     }
 
     return (
