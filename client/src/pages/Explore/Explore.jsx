@@ -1,5 +1,5 @@
 import './Explore.css'
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {AppContext} from "../../Context/AppContext.jsx";
 import DisplayCategory from "../../components/DisplayCategory/DisplayCategory.jsx";
 import DisplayItems from "../../components/DisplayItems/DisplayItems.jsx";
@@ -8,12 +8,15 @@ import CartItems from "../../components/CartItems/CartItems.jsx";
 import CartSummary from "../../components/CartSummary/CartSummary.jsx";
 const Explore = () => {
     const {categories}= useContext(AppContext);
-    console.log(categories);
+    const [selectedCategory, setSelectedCategory] = useState("");
     return (
         <div className = "explore-container text-light">
             <div className = "left-column">
                 <div className ="first-row" style = {{overflowY:"auto"}}>
-                    <DisplayCategory categories = {categories}/>
+                    <DisplayCategory
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                        categories = {categories}/>
                 </div>
                 <hr className = "horizontal-line"/>
                 <div className ="second-row" style = {{overflowY:"auto"}}>
