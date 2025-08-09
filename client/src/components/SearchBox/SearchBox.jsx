@@ -10,7 +10,9 @@ const SearchBox = ({onSearch}) => {
     return (
         <div className="input-group mb-3">
             <input type="text" className="form-control" placeholder="Search items..." value = {searchText} onChange={handleInputChange}/>
-            <button className="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+            <span className="input-group-text bg-warning">
+                <i className="bi bi-search"></i>
+            </span>
         </div>
     )
 }
