@@ -20,6 +20,15 @@ export const AppContextProvider = (props) => {
        }
     }
 
+    const removeFromCart = (itemId) => {
+        setCartItems(cartItems.filter(item => item.itemId !== itemId));
+    }
+
+    const updateQuantity = (itemId, newQuantity) => {
+        setCartItems(cartItems.map(item => item.itemId === itemId ? {...item, quantity: newQuantity}: item));
+    }
+
+
     useEffect(() => {
        async function loadData(){
            if(localStorage.getItem('token') && localStorage.getItem('role')){
@@ -46,7 +55,9 @@ export const AppContextProvider = (props) => {
         itemsData,
         setItemsData,
         addToCart,
-        cartItems
+        cartItems,
+        removeFromCart,
+        updateQuantity,
     }
     return <AppContext.Provider value={contextValue}>
         {props.children}
