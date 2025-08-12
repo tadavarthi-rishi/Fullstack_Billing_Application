@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import rishi.tadavarthi.Ecommerce_Clone.io.AuthRequest;
 import rishi.tadavarthi.Ecommerce_Clone.io.AuthResponse;
+import rishi.tadavarthi.Ecommerce_Clone.service.UserService;
 import rishi.tadavarthi.Ecommerce_Clone.service.impl.AppUserDetailsService;
+import rishi.tadavarthi.Ecommerce_Clone.util.JwtUtil;
 
 import java.util.Map;
 
@@ -25,12 +27,16 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final AppUserDetailsService appUserDetailsService;
+    private final JwtUtil jwtUtil;
+    private final UserService userService;
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) throws Exception{
         authenticate(request.getEmail(), request.getPassword());
         final UserDetails userDetails = appUserDetailsService.loadUserByUsername(request.getEmail());
-
+        final String jwtToken= jwtUtil.generateToken(userDetails);
+        String role = userService.getUserRole(request.getEmail());
+        return new AuthResponse(request.getEmail(), jwtToken, role);
     }
 
     private void authenticate(String email, String password) throws Exception{

@@ -1,6 +1,7 @@
 import './CartSummary.css'
 import {useContext} from "react";
 import {AppContext} from "../../Context/AppContext.jsx";
+import ReceiptPopup from "../ReceiptPopup/ReceiptPopup.jsx";
 
 const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}) => {
     const {cartItems} = useContext(AppContext);
@@ -23,6 +24,20 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
                     <span className="text-light">${Grandtotal.toFixed(2)}</span>
                 </div>
             </div>
+
+            <div className="d-flex gap-3">
+                <button className="btn btn-success flex-grow-1">
+                    Credit Card
+                </button>
+                <button className="btn btn-primary flex-grow-1">
+                    Debit Card
+                </button>
+            </div>
+        <div className="d-flex gap-3 mt-2">
+            <button className="btn btn-warning flex-grow-1">
+                Place order
+            </button>
+        </div>
         </div>
     )
 }

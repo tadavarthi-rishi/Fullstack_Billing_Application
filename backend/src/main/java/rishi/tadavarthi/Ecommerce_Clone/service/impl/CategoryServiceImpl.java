@@ -8,6 +8,7 @@ import rishi.tadavarthi.Ecommerce_Clone.entity.CategoryEntity;
 import rishi.tadavarthi.Ecommerce_Clone.io.CategoryRequest;
 import rishi.tadavarthi.Ecommerce_Clone.io.CategoryResponse;
 import rishi.tadavarthi.Ecommerce_Clone.repository.CategoryRepository;
+import rishi.tadavarthi.Ecommerce_Clone.repository.ItemRepository;
 import rishi.tadavarthi.Ecommerce_Clone.service.CategoryService;
 import rishi.tadavarthi.Ecommerce_Clone.service.FileUploadService;
 
@@ -22,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
+    private final ItemRepository itemRepository;
 
     @Override
     public CategoryResponse add(CategoryRequest request, MultipartFile file) {
@@ -51,6 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
+        Integer itemsCount = itemRepository.countByCategoryId(newCategory.getId());
        return CategoryResponse.builder()
                 .categoryId(newCategory.getCategoryId())
                 .name(newCategory.getName())
@@ -59,6 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .imgUrl(newCategory.getImgUrl())
                 .createdAt(String.valueOf(newCategory.getCreatedAt()))
                 .updatedAt(String.valueOf(newCategory.getUpdatedAt()))
+               .items(itemsCount)
                 .build();
     }
 
