@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity newOrder = convertToOrderEntity(request);
 
         PaymentDetails paymentDetails = new PaymentDetails();
-        paymentDetails.setStatus(newOrder.getPaymentMethod() == PaymentMethod.CASH? PaymentDetails.PaymentStatus.COMPLETED : PaymentDetails.PaymentStatus.PENDING);
+        paymentDetails.setStatus(newOrder.getPaymentMethod() == PaymentMethod.CASH ? PaymentDetails.PaymentStatus.COMPLETED : PaymentDetails.PaymentStatus.PENDING);
         newOrder.setPaymentDetails(paymentDetails);
 
         List<OrderItemEntity> orderItems = request.getCartItems().stream()
@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(String orderId) {
-        OrderEntity existingOrder = orderEntityRepository.findByOrderId(Long.valueOf(orderId))
+        OrderEntity existingOrder = orderEntityRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         orderEntityRepository.delete(existingOrder);
     }
