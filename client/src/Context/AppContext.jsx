@@ -47,6 +47,10 @@ export const AppContextProvider = (props) => {
         setAuth({token, role});
     }
 
+    const clearCart = () => {
+        setCartItems([]);
+    }
+
     const contextValue = {
         categories,
         setCategories,
@@ -58,6 +62,7 @@ export const AppContextProvider = (props) => {
         cartItems,
         removeFromCart,
         updateQuantity,
+        clearCart
     }
     return <AppContext.Provider value={contextValue}>
         {props.children}
