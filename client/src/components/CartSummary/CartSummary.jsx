@@ -16,7 +16,7 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
 
     const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const tax = totalAmount * 0.18;
-    const Grandtotal = totalAmount + tax;
+    const grandTotal = totalAmount + tax;
 
     const clearAll = () => {
         setCustomerName("");
@@ -24,10 +24,18 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
         clearCart();
     }
 
+    // const placeOrder = () => {
+    //     setShowPopup(true);
+    //     clearAll();
+    // }
     const placeOrder = () => {
+        if (!orderDetails) {
+            toast.error("Please complete a payment first");
+            return;
+        }
         setShowPopup(true);
-        clearAll();
-    }
+    };
+
 
     const handlePrintReceipt = () => {
         window.print();
@@ -70,7 +78,7 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
             cartItems,
             subtotal: totalAmount,
             tax,
-            Grandtotal,
+            grandTotal: grandTotal,
             paymentMethod: paymentMode.toUpperCase()
         }
         setIsProcessing(true);
@@ -80,7 +88,8 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
         const savedData = response.data;
         if(response.status === 201 && paymentMode === "credit"){
             toast.success("Order placed successfully");
-            setOrderDetails(savedData)
+            setOrderDetails(savedData);
+
 
         } else if(response.status === 201 && paymentMode === "debit") {
             const razorpayLoaded = await loadRazorpayScript();
@@ -91,7 +100,7 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
             }
 
             //create razorpay order
-            const razorpayResponse = await createRazorpayOrder({amount: Grandtotal, currency: "INR"});
+            const razorpayResponse = await createRazorpayOrder({amount: grandTotal, currency: "INR"});
             const options = {
                 key: AppConstants.RAZORPAY_KEY_ID,
                 amount: razorpayResponse.data.amount,
@@ -182,7 +191,7 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
                 </div>
                 <div className="d-flex justify-content-between mb-4">
                     <span className="text-light">Grand Total</span>
-                    <span className="text-light">${Grandtotal.toFixed(2)}</span>
+                    <span className="text-light">${grandTotal.toFixed(2)}</span>
                 </div>
             </div>
 
@@ -207,6 +216,21 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
                 Place order
             </button>
         </div>
+            {
+                showPopup && orderDetails && (
+                    <ReceiptPopup
+                    orderDetails={{
+                        ...orderDetails,
+                        razorpayOrderId: orderDetails.paymentDetails?.razorpayOrderId,
+                        razorpayPaymentId: orderDetails.paymentDetails?.razorpayPaymentId,
+
+                    }}
+                        onClose={() => setShowPopup(false)}
+                        onPrint={handlePrintReceipt}
+
+                    />
+                )
+            }
         </div>
     )
 }
