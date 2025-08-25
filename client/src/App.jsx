@@ -7,6 +7,7 @@ import Explore from "./pages/Explore/Explore.jsx";
 import { Routes, Route, useLocation } from "react-router-dom";
 import {Toaster} from "react-hot-toast";
 import Login from "./pages/Login/Login.jsx";
+import OrderHistory from "./pages/OrderHistory/OrderHistory.jsx";
 
 const App = () => {
     const location = useLocation();
@@ -22,6 +23,9 @@ const App = () => {
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/" element={<Dashboard />} />
                 <Route path={"/login"} element={<Login />} />
+                <Route path={"/orders"} element={<OrderHistory />} />
+
+
             </Routes>
         </div>
     );

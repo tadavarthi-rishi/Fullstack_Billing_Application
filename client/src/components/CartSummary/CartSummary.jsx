@@ -24,17 +24,17 @@ const CartSummary = ({customerName,mobileNumber,setMobileNumber,setCustomerName}
         clearCart();
     }
 
-    // const placeOrder = () => {
-    //     setShowPopup(true);
-    //     clearAll();
-    // }
     const placeOrder = () => {
-        if (!orderDetails) {
-            toast.error("Please complete a payment first");
-            return;
-        }
         setShowPopup(true);
-    };
+        clearAll();
+    }
+    // const placeOrder = () => {
+    //     if (!orderDetails) {
+    //         toast.error("Please complete a payment first");
+    //         return;
+    //     }
+    //     setShowPopup(true);
+    // };
 
 
     const handlePrintReceipt = () => {
