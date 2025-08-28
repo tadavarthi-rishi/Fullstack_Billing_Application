@@ -4,12 +4,13 @@ import ManageCategory from "./pages/ManageCategory/ManageCategory.jsx";
 import ManageUsers from "./pages/ManageUsers/ManageUsers.jsx";
 import ManageItems from "./pages/ManageItems/ManageItems.jsx";
 import Explore from "./pages/Explore/Explore.jsx";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import {Toaster} from "react-hot-toast";
 import Login from "./pages/Login/Login.jsx";
 import OrderHistory from "./pages/OrderHistory/OrderHistory.jsx";
 import {useContext} from "react";
 import {AppContext} from "./Context/AppContext.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
 
 const App = () => {
     const location = useLocation();
@@ -39,13 +40,18 @@ const App = () => {
             <Toaster />
             <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/category" element={<ManageCategory />} />
-                <Route path="/users" element={<ManageUsers />} />
-                <Route path="/items" element={<ManageItems />} />
                 <Route path="/explore" element={<Explore />} />
-                <Route path="/" element={<Dashboard />} />
-                <Route path={"/login"} element={<Login />} />
+
+                {/* admin only routes */}
+                <Route path="/category" element={<ProtectedRoute element={<ManageCategory />} allowedRoles={['ROLE_ADMIN']} />} />
+                <Route path="/users" element={<ProtectedRoute element={<ManageUsers />} allowedRoles={['ROLE_ADMIN']} />} />
+                <Route path="/items" element={<ProtectedRoute element={<ManageItems />} allowedRoles={['ROLE_ADMIN']} />} />
+
+
+                <Route path={"/login"} element={<LoginRoute element={<Login />} />} />
                 <Route path={"/orders"} element={<OrderHistory />} />
+                <Route path="/" element = {<Dashboard />} />
+                <Route path="*" element = {<NotFound />} />
 
 
             </Routes>
