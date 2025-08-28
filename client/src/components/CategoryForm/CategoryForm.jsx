@@ -75,6 +75,7 @@ toast.error("Unable to add category");
                                        placeholder="Enter Category Name"
                                        onChange = {onChangeHandler}
                                        value = {data.name}
+                                       required
                                 />
                             </div>
                             <div className="mb-3">
@@ -97,7 +98,8 @@ toast.error("Unable to add category");
                                        id="bgcolor"
                                        onChange={onChangeHandler}
                                        value = {data.bgColor}
-                                       placeholder={"#ffffff"}/>
+                                       placeholder={"#ffffff"}
+                                />
                             </div>
                             <button type="submit" disabled={loading} className="btn btn-primary w-100">{loading ?"Loading...":"submit"}</button>
                         </form>
